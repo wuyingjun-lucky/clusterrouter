@@ -16,3 +16,15 @@ container: container-clusterrouter
 
 container-clusterrouter: clusterrouter
 	docker build -t $(REGISTRY_NAME)/clusterrouter:$(VERSION) -f Dockerfile.clusterrouter --label revision=$(REV) .
+
+.PHONY: lint
+lint: golangci-lint
+	$(GOLANGLINT_BIN) run
+
+golangci-lint:
+ifeq (, $(shell which golangci-lint))
+	GO111MODULE=on go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.49.0
+GOLANGLINT_BIN=$(shell go env GOPATH)/bin/golangci-lint
+else
+GOLANGLINT_BIN=$(shell which golangci-lint)
+endif
