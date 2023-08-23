@@ -19,3 +19,6 @@ bin/
 kube-config/
 __debug_bin
 deploy/examples/byh-vn.yaml
+
+# add osx trash
+.DS_Store
